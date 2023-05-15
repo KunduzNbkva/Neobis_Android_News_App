@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_main">
+
+    <fragment
+        android:id="@+id/navigation_main"
+        android:name="kg.kunduznbkva.newsapp.ui.main.MainFragment"
+        android:label="@string/main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_archive"
+            app:destination="@id/navigation_favorites" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="kg.kunduznbkva.newsapp.ui.favorite.FavoritesFragment"
+        android:label="@string/favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_navigation_main"
+            app:destination="@id/navigation_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail"
+        android:name="kg.kunduznbkva.newsapp.ui.detail.DetailFragment"
+        android:label="@string/main"
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_navigation_detail_to_navigation_main"
+            app:destination="@id/navigation_main" />
+    </fragment>
+</navigation>
