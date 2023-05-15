@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/liight_gray"
     android:padding="20dp"
-    tools:context=".ui.MainFragment">
+    tools:context=".ui.main.MainFragment">
 
 
     <TextView
@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/refresh_icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/refresh"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,8 +55,8 @@
 
         <ImageView
             android:id="@+id/favorite_icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/favorite_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

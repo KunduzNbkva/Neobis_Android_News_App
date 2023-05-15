@@ -11,10 +11,10 @@ class Article {
     var content: String? = null
 }
 
-class Root {
+class NewsResponse {
     var status: String? = null
     var totalResults = 0
-    var articles: ArrayList<Article>? = null
+    var articles: MutableList<Article>? = null
 }
 
 class Source {
