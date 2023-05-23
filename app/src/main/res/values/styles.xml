@@ -11,9 +11,9 @@
 
     <style name="RecyclerStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 
 

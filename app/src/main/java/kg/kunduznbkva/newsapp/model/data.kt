@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "articles")
-data class Article (
+data class Article(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
     var source: Source? = null,
@@ -14,10 +14,11 @@ data class Article (
     var url: String? = null,
     var urlToImage: String? = null,
     var publishedAt: String? = null,
-    var content: String? = null
-): java.io.Serializable
+    var content: String? = null,
+    var saved: Boolean = false
+) : java.io.Serializable
 
-data class NewsResponse (
+data class NewsResponse(
     var status: String? = null,
     var totalResults: Int? = 0,
     var articles: MutableList<Article>? = null

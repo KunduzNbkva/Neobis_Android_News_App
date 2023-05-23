@@ -32,6 +32,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         val article = args.article
+        if (article.saved) binding.likeButton.isPressed = true
         initWebView(article)
         initBackIcon()
         initFab(article)
@@ -53,6 +54,7 @@ class DetailFragment : Fragment() {
     private fun initFab(article: Article) {
         binding.likeButton.setOnClickListener {
             viewModel.saveArticle(article)
+            article.saved = true
             view?.let { it1 -> Snackbar.make(it1,getString(R.string.snackbar_message),Snackbar.LENGTH_SHORT).show() }
         }
     }

@@ -39,7 +39,7 @@
         android:focusable="true"
         app:backgroundTint="@color/white"
         app:tint="@color/dark_blue_txt"
-        android:src="@drawable/favorite_icon"
+        app:srcCompat = "@drawable/fab_states"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/like"/>

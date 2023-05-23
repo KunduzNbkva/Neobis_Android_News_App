@@ -56,7 +56,7 @@ class SavedFragment : Fragment() {
     }
 
     private fun observeSavedNews() {
-        viewModel.getFavoriteNews().observe(viewLifecycleOwner) { articles ->
+        viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
             adapter.differ.submitList(articles)
         }
     }
