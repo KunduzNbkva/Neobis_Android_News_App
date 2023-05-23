@@ -14,18 +14,21 @@
             android:id="@+id/action_navigation_main_to_navigation_detail"
             app:destination="@id/navigation_detail" />
         <action
-            android:id="@+id/action_navigation_main_to_navigation_archive"
-            app:destination="@id/navigation_favorites" />
+            android:id="@+id/action_navigation_main_to_navigation_saved"
+            app:destination="@id/navigation_saved" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="kg.kunduznbkva.newsapp.ui.favorite.FavoritesFragment"
+        android:id="@+id/navigation_saved"
+        android:name="kg.kunduznbkva.newsapp.ui.favorite.SavedFragment"
         android:label="@string/favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/action_navigation_favorites_to_navigation_main"
+            android:id="@+id/action_navigation_saved_to_navigation_main"
             app:destination="@id/navigation_main" />
+        <action
+            android:id="@+id/action_navigation_saved_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
     </fragment>
 
     <fragment
@@ -36,5 +39,8 @@
         <action
             android:id="@+id/action_navigation_detail_to_navigation_main"
             app:destination="@id/navigation_main" />
+        <argument
+            android:name="article"
+            app:argType="kg.kunduznbkva.newsapp.model.Article" />
     </fragment>
 </navigation>

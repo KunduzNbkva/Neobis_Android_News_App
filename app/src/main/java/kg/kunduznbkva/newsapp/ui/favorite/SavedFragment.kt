@@ -1,4 +1,4 @@
-package kg.kunduznbkva.newsapp.ui.main
+package kg.kunduznbkva.newsapp.ui.favorite
 
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kg.kunduznbkva.newsapp.MainActivity
 import kg.kunduznbkva.newsapp.R
-import kg.kunduznbkva.newsapp.databinding.FragmentMainBinding
+import kg.kunduznbkva.newsapp.databinding.FragmentFavoritesBinding
 import kg.kunduznbkva.newsapp.ui.NewsViewModel
 import kg.kunduznbkva.newsapp.utils.*
 import kg.kunduznbkva.newsapp.utils.adapters.NewsAdapter
@@ -19,19 +22,19 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainFragment : Fragment() {
+
+class SavedFragment : Fragment() {
     private lateinit var viewModel: NewsViewModel
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentFavoritesBinding
     private lateinit var adapter: NewsAdapter
-    private val TAG = "MainFragment"
     private val TAG_SEARCH = "SEARCH_NEWS"
 
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        binding = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -39,67 +42,65 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         initRecycler()
+        observeSavedNews()
         initDetailClick()
-        initFavoritesPage()
-        setupObserver()
         initSearchView()
         setupSearchObserver()
-    }
-
-    private fun initFavoritesPage() {
-        binding.favoriteIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_main_to_navigation_saved)
-        }
+        initDeleteArticle()
+        initBackIcon()
     }
 
     private fun initRecycler() {
         adapter = NewsAdapter()
-        binding.mainNewsRv.adapter = adapter
+        binding.favoriteNews.adapter = adapter
     }
 
-    private fun setupObserver() {
-        viewModel.breakingNews.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let {
-                        adapter.differ.submitList(it.articles)
-                    }
-                }
+    private fun observeSavedNews() {
+        viewModel.getFavoriteNews().observe(viewLifecycleOwner) { articles ->
+            adapter.differ.submitList(articles)
+        }
+    }
 
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let {
-                        Log.e(TAG, "An error occured: $it")
-                    }
-                }
-
-                is Resource.Loading -> showProgressBar()
+    private fun initDetailClick() {
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
             }
+            findNavController().navigate(
+                R.id.action_navigation_saved_to_navigation_detail,
+                bundle
+            )
+        }
+    }
+
+    private fun initBackIcon() {
+        binding.backIcon.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
     private fun initSearchView() {
         var job: Job? = null
-        binding.searchMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean{
+        binding.searchMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
                 job?.cancel()
                 job = MainScope().launch {
                     delay(Constants.searchTimeDelay)
                     query?.let {
-                        if(query.isNotEmpty()){
+                        if (query.isNotEmpty()) {
                             viewModel.searchNews(query)
                         }
                     }
                 }
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 job?.cancel()
                 job = MainScope().launch {
                     delay(Constants.searchTimeDelay)
                     newText?.let {
-                        if(newText.isNotEmpty()){
+                        if (newText.isNotEmpty()) {
                             viewModel.searchNews(newText)
                         }
                     }
@@ -132,18 +133,38 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun initDetailClick(){
-        adapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("article",it)
+    private fun initDeleteArticle() {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
             }
-            findNavController().navigate(
-                R.id.action_navigation_main_to_navigation_detail,
-                bundle
-            )
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val article = adapter.differ.currentList[position]
+                viewModel.deleteArticle(article)
+                view?.let {
+                    Snackbar.make(it, getString(R.string.deleted) , Snackbar.LENGTH_SHORT).apply {
+                        setAction(getString(R.string.undo)) {
+                            viewModel.saveArticle(article)
+                        }
+                        show()
+                    }
+                }
+            }
+        }
+
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(binding.favoriteNews)
         }
     }
-
 
     private fun hideProgressBar() {
         binding.progress.gone()
@@ -152,5 +173,4 @@ class MainFragment : Fragment() {
     private fun showProgressBar() {
         binding.progress.visible()
     }
-
 }

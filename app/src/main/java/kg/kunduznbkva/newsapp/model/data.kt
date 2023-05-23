@@ -15,7 +15,7 @@ data class Article (
     var urlToImage: String? = null,
     var publishedAt: String? = null,
     var content: String? = null
-)
+): java.io.Serializable
 
 data class NewsResponse (
     var status: String? = null,

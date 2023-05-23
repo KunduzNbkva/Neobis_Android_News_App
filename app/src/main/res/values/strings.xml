@@ -6,4 +6,14 @@
     <string name="like">like news</string>
     <string name="main">Breaking News</string>
     <string name="favorites">Saved News</string>
+    <string name="news_image">news image</string>
+    <string name="refresh_news">refresh news</string>
+    <string name="favorite_news">favorite news</string>
+    <string name="error_message">Ohh something happened(</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="saved_news">Saved News</string>
+    <string name="snackbar_message">Article saved successfully</string>
+    <string name="undo">UNDO</string>
+    <string name="deleted">Successfully deleted article</string>
+    <string name="icon_back">icon back</string>
 </resources>

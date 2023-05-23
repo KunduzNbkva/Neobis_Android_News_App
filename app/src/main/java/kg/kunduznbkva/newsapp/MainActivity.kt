@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val repository= NewsDatabase.getInstance(this)?.let { NewsRepository() }
+        val repository= NewsDatabase.getInstance(this)?.let { NewsRepository(it) }
         val viewModelProviderFactory = repository?.let { NewsViewModelProviderFactory(it) }
         viewModel = ViewModelProvider(this,viewModelProviderFactory!!)[NewsViewModel::class.java]
         super.onCreate(savedInstanceState)
