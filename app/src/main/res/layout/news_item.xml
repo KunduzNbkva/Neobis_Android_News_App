@@ -1,86 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:elevation="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_marginTop="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:layout_height="150dp"
+    app:cardCornerRadius="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginTop="10dp"
+    android:backgroundTint="@color/white">
 
-    <ImageView
-        android:id="@+id/news_image"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/news_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/robotoflex_regular"
-        android:textSize="16sp"
-        android:textColor="@color/red"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/news_image"
-        tools:text ="JDBkd bbnn"/>
+        <ImageView
+            android:id="@+id/news_image"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="11dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/news_image" />
 
-    <TextView
-        android:id="@+id/news_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/robotoflex_regular"
-        android:textSize="14sp"
-        android:textColor="@color/time_color_grey"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/news_author"
-        tools:text ="2021-12-02T08:01:31Z"/>
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="16dp"
+            android:maxLines="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/news_image"
+            app:layout_constraintTop_toTopOf="@+id/news_image"
+            tools:text="Apple's 2021 App Store Awards highlight 'connection'"/>
 
-    <TextView
-        android:id="@+id/news_title"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_bold"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@id/news_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/news_image"
-        tools:text="Apple's 2021 App Store Awards highlight 'connection'"/>
+        <TextView
+            android:id="@+id/news_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="11dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:maxLines="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/news_title"
+            app:layout_constraintStart_toStartOf="@+id/news_title"
+            app:layout_constraintTop_toBottomOf="@+id/news_title"
+            android:fontFamily="@font/robotoflex_regular"
+            tools:text="Apple's 2021 App Store Awards highlight 'connection'"
+          />
 
-    <TextView
-        android:id="@+id/news_description"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/robotoflex_regular"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@id/news_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/news_title"
-        tools:text="Apple's 2021 App Store Awards highlight 'connection'"/>
+        <TextView
+            android:id="@+id/news_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:fontFamily="@font/robotoflex_regular"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/news_image"
+            app:layout_constraintStart_toStartOf="@+id/news_image"
+            app:layout_constraintTop_toBottomOf="@+id/news_image"
+            tools:text ="JDBkd bbnn" />
+
+        <TextView
+            android:id="@+id/news_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="11dp"
+            android:textSize="11sp"
+            android:textColor="@color/time_color_grey"
+            android:maxLines="2"
+            android:fontFamily="@font/robotoflex_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/news_author"
+            app:layout_constraintStart_toStartOf="@+id/news_author"
+            app:layout_constraintTop_toBottomOf="@+id/news_author"
+            tools:text ="2021-12-02T08:01:31Z" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

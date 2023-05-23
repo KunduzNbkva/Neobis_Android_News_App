@@ -1,42 +1,74 @@
 package kg.kunduznbkva.newsapp.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kg.kunduznbkva.newsapp.R
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kg.kunduznbkva.newsapp.MainActivity
+import kg.kunduznbkva.newsapp.databinding.FragmentMainBinding
+import kg.kunduznbkva.newsapp.ui.NewsViewModel
+import kg.kunduznbkva.newsapp.utils.Resource
+import kg.kunduznbkva.newsapp.utils.adapters.NewsAdapter
+import kg.kunduznbkva.newsapp.utils.gone
+import kg.kunduznbkva.newsapp.utils.visible
 
 class MainFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var binding: FragmentMainBinding
+    private lateinit var adapter: NewsAdapter
+    private val TAG = "MainFragment"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMainBinding.inflate(layoutInflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
+        initRecycler()
+        setupObserver()
+    }
+
+    private fun initRecycler() {
+        adapter = NewsAdapter()
+        binding.mainNewsRv.adapter = adapter
+    }
+
+    private fun setupObserver() {
+        viewModel.breakingNews.observe( viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let {
+                        adapter.differ.submitList(it.articles)
+                    }
+                }
+
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let {
+                        Log.e(TAG, "An error occured: $it")
+                    }
+                }
+
+                is Resource.Loading -> showProgressBar()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    private fun hideProgressBar() {
+        binding.progress.gone()
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showProgressBar() {
+        binding.progress.visible( )
     }
+
 }

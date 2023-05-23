@@ -1,4 +1,4 @@
-package kg.kunduznbkva.newsapp.adapters
+package kg.kunduznbkva.newsapp.utils.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -45,7 +45,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 class NewsViewHolder(private var binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(article: Article?) {
         article?.let {
-            binding.newsImage.loadImage(article.urlToImage)
+            article.urlToImage?.let { it1 -> binding.newsImage.loadImage(it1) }
             binding.newsTitle.text = article.title
             binding.newsAuthor.text = article.author
             binding.newsTime.text = article.publishedAt

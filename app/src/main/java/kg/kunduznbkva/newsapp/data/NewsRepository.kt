@@ -1,12 +1,13 @@
 package kg.kunduznbkva.newsapp.data
 
-import kg.kunduznbkva.newsapp.data.remote.NewsApi
+import kg.kunduznbkva.newsapp.data.local.NewsDatabase
+import kg.kunduznbkva.newsapp.data.remote.RetrofitInstance
 
 
-class NewsRepository(private val api: NewsApi){
+class NewsRepository(){
 
-    fun getPlaylists() {}
+    suspend fun getBreakingNews(countryCode:String,pageNumber:Int)=
+        RetrofitInstance.api.getBreakingNews(countryCode,pageNumber)
 
 
-    fun getPlaylistItem(id: String) {}
 }
