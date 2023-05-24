@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.NewsApp" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
@@ -15,6 +15,7 @@
     </style>
     <style name="MyActionBarWidgetTheme" parent="@android:style/Theme.Holo">
         <item name="android:textColorHint">@color/search_bar_grey_txt</item>
+        <item name="android:textColorPrimary">@color/dark_blue_txt</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 </resources>

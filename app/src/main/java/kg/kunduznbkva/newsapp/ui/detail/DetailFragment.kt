@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -53,8 +54,9 @@ class DetailFragment : Fragment() {
 
     private fun initFab(article: Article) {
         binding.likeButton.setOnClickListener {
-            viewModel.saveArticle(article)
+            binding.likeButton.setImageDrawable( ContextCompat.getDrawable(requireContext(), R.drawable.favorite_full))
             article.saved = true
+            viewModel.saveArticle(article)
             view?.let { it1 -> Snackbar.make(it1,getString(R.string.snackbar_message),Snackbar.LENGTH_SHORT).show() }
         }
     }
